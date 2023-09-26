@@ -1,3 +1,6 @@
+"""Lethera - 2020
+A discord bot that honks, maintains a blacklist, sends goose gifs, and has an item-finding game.
+"""
 from keep_alive import keep_alive
 import discord
 from discord.ext import commands
@@ -207,7 +210,7 @@ async def on_member_join(member):
         file.write(
             "gooseMode = True\nwelcomeChannel = general\nwelcomeStatus = off\nlastAuthor = None\n, Ignored Channels = None"
         )
-        print("Wrote info to new server doc after shut off, {0}, {1}".format(guild.id, guild.name))
+        print("Wrote info to new server doc after shut off, {0}, {1}".format(serverId, member.guild.name))
 
 
 #Sends invite link
@@ -250,7 +253,7 @@ async def info(ctx):
 @bot.command(name='stats')
 async def stats(ctx):
     honkCount = await findVal(".//stats.txt", "honkCount")
-    await ctx.send("Honkers has honked {0} times!".format(honkCount))
+    await ctx.send("Honkers has honked {0} times and is in {1} servers!".format(honkCount, len(bot.guilds)))
 
 
 #Turn off welcome messages
@@ -755,13 +758,13 @@ async def on_message(message):
                 noHonk = True
             elif ('goose' in message.content.lower() and noHonk == False):
                 await channel.send("HONK")
-                honks = int(await findVal(".//stats.txt", "honkCount")) + 1
-                await replaceVal(".//stats.txt", "honkCount", honks)
+                honks = int(await findVal(".stats.txt", "honkCount")) + 1
+                await replaceVal(".stats.txt", "honkCount", honks)
             elif ('HONK' in message.content.upper()
                   and 'b!' not in message.content.lower() and noHonk == False):
                 await channel.send("goose")
-                honks = int(await findVal(".//stats.txt", "honkCount")) + 1
-                await replaceVal(".//stats.txt", "honkCount", honks)
+                honks = int(await findVal(".stats.txt", "honkCount")) + 1
+                await replaceVal(".stats.txt", "honkCount", honks)
 
     else:
         try:
