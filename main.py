@@ -1,4 +1,4 @@
-"""Lethera - 2020
+"""Katherine Thorpe (Lethera)
 A discord bot that honks, maintains a blacklist, sends goose gifs, and has an item-finding game.
 """
 from keep_alive import keep_alive
